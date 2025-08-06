@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgiliFood.Business", "Agili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgiliFood.Data", "AgiliFood.Data\AgiliFood.Data.csproj", "{89FD1A19-75C6-4B32-B858-F41EFE465E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgiliFood.Application", "Application\AgiliFood.Application.csproj", "{7940FF5C-706A-4C22-A543-2C149260B9D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgiliFood.Application", "AgiliFood.Application\AgiliFood.Application.csproj", "{7B58D881-7086-4080-B7EE-5D87DE81494D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{89FD1A19-75C6-4B32-B858-F41EFE465E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89FD1A19-75C6-4B32-B858-F41EFE465E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89FD1A19-75C6-4B32-B858-F41EFE465E8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7940FF5C-706A-4C22-A543-2C149260B9D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7940FF5C-706A-4C22-A543-2C149260B9D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7940FF5C-706A-4C22-A543-2C149260B9D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7940FF5C-706A-4C22-A543-2C149260B9D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B58D881-7086-4080-B7EE-5D87DE81494D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B58D881-7086-4080-B7EE-5D87DE81494D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B58D881-7086-4080-B7EE-5D87DE81494D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B58D881-7086-4080-B7EE-5D87DE81494D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

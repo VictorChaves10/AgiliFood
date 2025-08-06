@@ -16,7 +16,7 @@
         
         public string Image { get; set; }
 
-        public long ProductCategoryId { get; set; }
+        public int ProductCategoryId { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
 

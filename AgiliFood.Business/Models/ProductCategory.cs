@@ -1,11 +1,10 @@
-﻿namespace AgiliFood.Business.Models
+﻿namespace AgiliFood.Business.Models;
+
+public class ProductCategory
 {
-    public class ProductCategory
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public ICollection<Product> Products { get; set; }
-    }
+    public ICollection<Product> Products { get; set; }
 }

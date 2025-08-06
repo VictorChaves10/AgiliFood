@@ -1,6 +1,7 @@
+using AgiliFood.Application.Interfaces;
+using AgiliFood.Application.Services;
 using AgiliFood.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ var configuration = builder.Configuration;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
 var app = builder.Build();
 
