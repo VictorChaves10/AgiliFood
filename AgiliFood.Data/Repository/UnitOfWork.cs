@@ -9,6 +9,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public ApplicationDbContext _context = context;
 
     private IProductRepository _productRepository;
+    private IProductCategoryRepository _productCategoryRepository;
 
 
     public IProductRepository ProductRepository
@@ -19,6 +20,13 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
         }
     }
 
+    public IProductCategoryRepository ProductCategoryRepository
+    {
+        get
+        {
+            return _productCategoryRepository ??= new ProductCategoryRepository(_context);
+        }
+    }
 
     public async Task CommitAsync()
     {

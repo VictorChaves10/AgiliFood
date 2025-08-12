@@ -4,6 +4,8 @@
     {
         Task CommitAsync();
         void Dispose();
+
         IProductRepository ProductRepository { get; }
+        IProductCategoryRepository ProductCategoryRepository { get; }
     }
 }
