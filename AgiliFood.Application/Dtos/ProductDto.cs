@@ -25,7 +25,7 @@ public class ProductDto
     public string BarCode { get; set; }
 
     [Required(ErrorMessage = "A categoria do produto é obrigatória.")]
-    public long ProductCategoryId { get; set; }
+    public int ProductCategoryId { get; set; }
 
     public string CategoryName { get; set; }
 

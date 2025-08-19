@@ -25,11 +25,9 @@ public class ProductCategoryService : IProductCategoryService
         _unitOfWork.ProductCategoryRepository.Create(entity);
         await _unitOfWork.CommitAsync();
 
-        return new ProductCategoryDto
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-        };
+        productCategoryDto.Id = entity.Id;
+        
+        return productCategoryDto;
     }
 
     public async Task<bool> DeleteAsync(int id)
