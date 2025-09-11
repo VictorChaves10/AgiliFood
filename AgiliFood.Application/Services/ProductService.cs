@@ -16,17 +16,20 @@ public class ProductService : IProductService
 
     public async Task<ProductDto> CreateAsync(ProductDto productDto)
     {
-        var product = new Product
-        {
-            Name = productDto.Name,
-            Description = productDto.Description,
-            Price = productDto.Price,
-            IsActive = productDto.IsActive,
-            BarCode = productDto.BarCode,
-            ProductCategoryId = productDto.ProductCategoryId,
-            Image = productDto.Image,
+        var product = new Product(
 
-        };
+            productDto.Name,
+            productDto.Description,
+            productDto.Brand,
+            productDto.Flavor,
+            productDto.Weight,
+            productDto.Price,
+            productDto.IsActive,
+            productDto.BarCode,
+            productDto.Image,
+            productDto.ProductCategoryId,
+            productDto.WeightUnit
+        );
 
         _unitOfWork.ProductRepository.Create(product);
 
@@ -40,10 +43,9 @@ public class ProductService : IProductService
     public async Task<bool> DeleteAsync(long id)
     {
         var entity = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == id);
+
         if (entity == null)
-        {
-            throw new Exception("Product not found.");
-        }
+            return false;
 
         _unitOfWork.ProductRepository.Delete(entity);
         await _unitOfWork.CommitAsync();
@@ -55,19 +57,21 @@ public class ProductService : IProductService
     {
         var products = await _unitOfWork.ProductRepository.GetAllAsync();
 
-        if (products == null || !products.Any())
-        {
-            throw new Exception("No products found.");
-        }
+        if (products == null || !products.Any())     
+            return Enumerable.Empty<ProductDto>();
 
         return products.Select(p => new ProductDto
         {
             Id = p.Id,
             Name = p.Name,
             Description = p.Description,
+            Flavor = p.Flavor,
+            Brand = p.Brand,
             Price = p.Price,
             IsActive = p.IsActive,
-            BarCode = p.BarCode
+            BarCode = p.BarCode,
+            ProductCategoryId = p.ProductCategoryId,
+            Image = p.Image
 
         }).ToList();
     }
@@ -77,15 +81,15 @@ public class ProductService : IProductService
         var product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == id);
 
         if (product == null)
-        {
-            throw new Exception($"Product with ID {id} not found.");
-        }
+            return null;
 
         return new ProductDto
         {
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
+            Flavor = product.Flavor,
+            Brand = product.Brand,
             Price = product.Price,
             IsActive = product.IsActive,
             BarCode = product.BarCode,
@@ -99,17 +103,22 @@ public class ProductService : IProductService
         var product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == productDto.Id);
 
         if (product == null)
-        {
-            throw new Exception($"Product with ID {productDto.Id} not found.");
-        }
+            return null;
 
-        product.Name = productDto.Name;
-        product.Description = productDto.Description;
-        product.Price = productDto.Price;
-        product.IsActive = productDto.IsActive;
-        product.BarCode = productDto.BarCode;
-        product.ProductCategoryId = productDto.ProductCategoryId;
-        product.Image = productDto.Image;
+        product.SetName(productDto.Name);
+        product.SetFlavor(productDto.Flavor);
+        product.SetWeight(productDto.Weight, productDto.WeightUnit);
+        product.ChangePrice(productDto.Price);
+        product.SetDescription(productDto.Description);
+        product.SetBrand(productDto.Brand);
+        product.SetBarCode(productDto.BarCode);
+        product.ChangeCategory(productDto.ProductCategoryId);
+        product.ChangeImage(productDto.Image);
+
+        if (productDto.IsActive)
+            product.Activate();
+        else
+            product.Deactivate();
 
         _unitOfWork.ProductRepository.Update(product);
         await _unitOfWork.CommitAsync();

@@ -6,5 +6,15 @@ public class ProductCategory
 
     public string Name { get; set; }
 
-    public ICollection<Product> Products { get; set; }
+    public ICollection<Product>? Products { get; set; }
+
+    public ProductCategory(string name)
+    {
+        Name = name;
+    }
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
 }

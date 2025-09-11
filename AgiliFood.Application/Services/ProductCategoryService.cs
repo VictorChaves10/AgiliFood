@@ -17,10 +17,8 @@ public class ProductCategoryService : IProductCategoryService
 
     public async Task<ProductCategoryDto> CreateAsync(ProductCategoryDto productCategoryDto)
     {
-        var entity = new ProductCategory
-        {
-            Name = productCategoryDto.Name,
-        };
+
+        var entity = new ProductCategory(productCategoryDto.Name);
 
         _unitOfWork.ProductCategoryRepository.Create(entity);
         await _unitOfWork.CommitAsync();
@@ -84,7 +82,7 @@ public class ProductCategoryService : IProductCategoryService
         {
             Id = entity.Id,
             Name = entity.Name,
-            Products = entity.Products.Select(p => new ProductDto
+            Products = entity.Products?.Select(p => new ProductDto
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -103,7 +101,7 @@ public class ProductCategoryService : IProductCategoryService
         if (entity == null)
             return null;
 
-        entity.Name = dto.Name;
+        entity.Update(dto.Name);
 
         _unitOfWork.ProductCategoryRepository.Update(entity);
         await _unitOfWork.CommitAsync();

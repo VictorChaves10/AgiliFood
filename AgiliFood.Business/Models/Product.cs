@@ -2,28 +2,114 @@
 
 public class Product
 {
-    public long Id { get; set; }
+    public long Id { get; private set; }
 
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
-    public string Description { get; set; }
+    public string? Description { get; private set; }
 
-    public string Brand { get; set; }
+    public string? Brand { get; private set; }
 
-    public string Flavor { get; set; }
+    public string Flavor { get; private set; }
 
-    public Wight Weight { get; set; }
+    public double WeightValue { get; private set; }
 
-    public decimal Price { get; set; }
+    public WeightUnitEnum WeightUnit { get; set; }
 
-    public bool IsActive { get; set; }
+    public decimal Price { get; private set; }
 
-    public string BarCode { get; set; }
-    
-    public string Image { get; set; }
+    public bool IsActive { get; private set; }
 
-    public int ProductCategoryId { get; set; }
+    public string? BarCode { get; private set; }
 
-    public ProductCategory ProductCategory { get; set; }
+    public string? Image { get; private set; }
 
+    public int ProductCategoryId { get; private set; }
+
+    public ProductCategory? ProductCategory { get; private set; }
+
+
+    public Product(string name, string? description, string? brand, string flavor,
+                  double weight, decimal price, bool isActive, string? barcode,
+                  string? image, int productCategoryId, WeightUnitEnum weightUnit)
+    {
+        SetName(name);
+        SetFlavor(flavor);
+        SetWeight(weight, weightUnit);
+        ChangePrice(price);
+
+        Description = description;
+        Brand = brand;
+        IsActive = isActive;
+        BarCode = barcode;
+        Image = image;
+        ProductCategoryId = productCategoryId;
+        WeightUnit = weightUnit;
+    }
+
+
+    public void SetName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("O nome do produto é obrigatório.", nameof(name));
+
+        Name = name;
+    }
+
+    public void SetFlavor(string flavor)
+    {
+        if (string.IsNullOrWhiteSpace(flavor))
+            throw new ArgumentException("O sabor é obrigatório.", nameof(flavor));
+
+        Flavor = flavor;
+    }
+
+    public void SetWeight(double weight, WeightUnitEnum weightUnit)
+    {
+        if (weight <= 0)
+            throw new ArgumentException("O peso do produto deve ser maior que zero.", nameof(weight));
+
+        WeightUnit = weightUnit;
+        WeightValue = weight;
+    }
+
+    public void ChangePrice(decimal newPrice)
+    {
+        if (newPrice < 0)
+            throw new ArgumentException("Preço não pode ser negativo.", nameof(newPrice));
+
+        Price = newPrice;
+    }
+
+    public void Activate() => IsActive = true;
+
+    public void Deactivate() => IsActive = false;
+
+    public void ChangeCategory(int categoryId)
+    {
+        if (categoryId <= 0)
+            throw new ArgumentException("O id da categoria não pode ser nulo.", nameof(categoryId));
+
+        ProductCategoryId = categoryId;
+    }
+
+    public void ChangeImage(string? image)
+    {
+        Image = image;
+    }
+
+    public void SetDescription(string? description)
+    {
+        Description = description;
+    }
+
+    public void SetBrand(string? brand)
+    {
+        Brand = brand;
+    }
+
+    public void SetBarCode(string? barCode)
+    {
+        BarCode = barCode;
+    }
 }

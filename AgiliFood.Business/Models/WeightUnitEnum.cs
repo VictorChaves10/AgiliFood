@@ -1,6 +1,6 @@
 ﻿namespace AgiliFood.Business.Models;
 
-public enum WeightUnit
+public enum WeightUnitEnum
 {
     g,    // Gramas
     ml,   // Mililitros

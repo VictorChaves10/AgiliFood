@@ -19,10 +19,10 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var products = await _service.GetAllAsync();
+
         if (products == null || !products.Any())
-        {
-            return NotFound("No products found.");
-        }
+            return NotFound("Não foi localizado os produtos.");
+
         return Ok(products);
     }
 
@@ -30,10 +30,10 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var product = await _service.GetByIdAsync(id);
+
         if (product == null)
-        {
-            return NotFound($"Product with ID {id} not found.");
-        }
+            return NotFound("Produto não localizado");
+
         return Ok(product);
     }
 
@@ -41,9 +41,11 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> Create([FromBody] ProductDto productDto)
     {
         if (productDto == null)
-        {
-            return BadRequest("Product data is required.");
-        }
+            return BadRequest("O produto é obrigatório.");
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var createdProduct = await _service.CreateAsync(productDto);
         return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
     }
@@ -52,17 +54,14 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> Update(int id, [FromBody] ProductDto productDto)
     {
         if (productDto == null || productDto.Id != id)
-        {
-            return BadRequest("Product data is invalid.");
-        }
+            return BadRequest("Produto com id inválido");
 
         var updatedProduct = await _service.UpdateAsync(productDto);
 
         if (updatedProduct == null)
-        {
-            return NotFound($"Product with ID {id} not found.");
-        }
-        
+            return NotFound("Produto não localizado");
+
+
         return Ok(updatedProduct);
     }
 
@@ -70,11 +69,11 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var deleted = await _service.DeleteAsync(id);
+
         if (!deleted)
-        {
-            return NotFound($"Product with ID {id} not found.");
-        }
-        
+            return NotFound("Produto não localizado");
+
+
         return NoContent();
     }
 }
