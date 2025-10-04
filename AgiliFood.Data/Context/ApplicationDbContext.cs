@@ -1,5 +1,4 @@
-﻿using AgiliFood.Business;
-using AgiliFood.Business.Models;
+﻿using AgiliFood.Business.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgiliFood.Data.Context;
@@ -8,9 +7,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<StockItem> StockItems { get; set; }
+    public DbSet<StockMovement> StockMovements { get; set; }
 
-   //public DbSet<Employee> Employees { get; set; }
-    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
