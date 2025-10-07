@@ -12,7 +12,7 @@ public class Product
 
     public string Flavor { get; private set; }
 
-    public double WeightValue { get; private set; }
+    public double Weight { get; private set; }
 
     public WeightUnitEnum WeightUnit { get; set; }
 
@@ -28,9 +28,10 @@ public class Product
 
     public ProductCategory? ProductCategory { get; private set; }
 
+    protected Product() { } 
 
     public Product(string name, string? description, string? brand, string flavor,
-                  double weight, decimal price, bool isActive, string? barcode,
+                  double weight, decimal price, bool isActive, string? barCode,
                   string? image, int productCategoryId, WeightUnitEnum weightUnit)
     {
         SetName(name);
@@ -41,10 +42,9 @@ public class Product
         Description = description;
         Brand = brand;
         IsActive = isActive;
-        BarCode = barcode;
+        BarCode = barCode;
         Image = image;
         ProductCategoryId = productCategoryId;
-        WeightUnit = weightUnit;
     }
 
 
@@ -70,7 +70,7 @@ public class Product
             throw new ArgumentException("O peso do produto deve ser maior que zero.", nameof(weight));
 
         WeightUnit = weightUnit;
-        WeightValue = weight;
+        Weight = weight;
     }
 
     public void ChangePrice(decimal newPrice)
@@ -98,18 +98,4 @@ public class Product
         Image = image;
     }
 
-    public void SetDescription(string? description)
-    {
-        Description = description;
-    }
-
-    public void SetBrand(string? brand)
-    {
-        Brand = brand;
-    }
-
-    public void SetBarCode(string? barCode)
-    {
-        BarCode = barCode;
-    }
 }

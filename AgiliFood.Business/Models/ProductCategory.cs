@@ -8,6 +8,8 @@ public class ProductCategory
 
     public ICollection<Product>? Products { get; set; }
 
+    protected ProductCategory() { }
+
     public ProductCategory(string name)
     {
         Name = name;

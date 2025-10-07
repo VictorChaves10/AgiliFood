@@ -14,6 +14,8 @@ public class StockMovement
 
     public DateTime Date { get; private set; }
 
+    protected StockMovement() { }
+
     public StockMovement(StockMovementType type, int quantity, string reason)
     {
         Type = type;

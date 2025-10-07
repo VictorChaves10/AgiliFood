@@ -109,9 +109,6 @@ public class ProductService : IProductService
         product.SetFlavor(productDto.Flavor);
         product.SetWeight(productDto.Weight, productDto.WeightUnit);
         product.ChangePrice(productDto.Price);
-        product.SetDescription(productDto.Description);
-        product.SetBrand(productDto.Brand);
-        product.SetBarCode(productDto.BarCode);
         product.ChangeCategory(productDto.ProductCategoryId);
         product.ChangeImage(productDto.Image);
 

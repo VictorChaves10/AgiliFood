@@ -18,6 +18,7 @@ public class StockItem
 
     public IReadOnlyCollection<StockMovement> Movements => _movements.AsReadOnly();
 
+    protected StockItem() { }
 
     public StockItem(long productId, int initialQuantity, DateTime? expirationDate = null)
     {

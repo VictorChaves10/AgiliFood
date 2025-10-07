@@ -27,12 +27,27 @@ public class ProductMapping : IEntityTypeConfiguration<Product>
         builder.Property(p => p.IsActive)
                .IsRequired();
 
+        builder.Property(p => p.Weight)
+               .IsRequired();
+
+        builder.Property(p => p.WeightUnit)
+                .IsRequired();
+
         builder.Property(p => p.BarCode)
-               .IsRequired()
                .HasMaxLength(50);
 
         builder.Property(p => p.ProductCategoryId)
                .IsRequired();
+
+        builder.Property(p => p.Flavor)
+               .IsRequired()
+               .HasMaxLength(100);
+
+        builder.Property(p => p.Brand)
+               .HasMaxLength(100);
+
+        builder.Property(p => p.Image)
+               .HasMaxLength(200);
 
         builder.HasOne(p => p.ProductCategory)
                .WithMany(c => c.Products)

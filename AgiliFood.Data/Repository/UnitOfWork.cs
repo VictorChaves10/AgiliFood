@@ -6,9 +6,10 @@ namespace ClinicSoftware.Infrastructure.Repositories;
 
 public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {
-    public ApplicationDbContext _context = context;
+    private readonly ApplicationDbContext _context = context;
 
     private IProductRepository _productRepository;
+
     private IProductCategoryRepository _productCategoryRepository;
 
 
