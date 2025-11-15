@@ -1,4 +1,4 @@
-﻿using AgiliFood.Business.Models;
+﻿using AgiliFood.Business.Models.Product;
 
 namespace AgiliFood.Business.Interfaces
 {

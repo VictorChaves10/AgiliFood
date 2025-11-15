@@ -3,6 +3,7 @@ using AgiliFood.Application.Dtos;
 using AgiliFood.Application.Interfaces;
 using AgiliFood.Business.Interfaces;
 using AgiliFood.Business.Models;
+using AgiliFood.Business.Models.Product;
 
 namespace AgiliFood.Application.Services;
 

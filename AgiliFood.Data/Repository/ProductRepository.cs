@@ -1,5 +1,5 @@
 ﻿using AgiliFood.Business.Interfaces;
-using AgiliFood.Business.Models;
+using AgiliFood.Business.Models.Product;
 using AgiliFood.Data.Context;
 
 namespace AgiliFood.Data.Repository;

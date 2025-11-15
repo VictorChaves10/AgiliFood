@@ -1,4 +1,5 @@
-﻿using AgiliFood.Business.Models;
+﻿using AgiliFood.Business.Models.Product;
+using AgiliFood.Business.Models.Stock;
 
 public class StockItem
 {

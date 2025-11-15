@@ -1,4 +1,4 @@
-﻿namespace AgiliFood.Business.Models;
+﻿namespace AgiliFood.Business.Models.Product;
 
 public class ProductCategory
 {
