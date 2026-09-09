@@ -52,10 +52,6 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
 
         ConcurrencyConflictException => (StatusCodes.Status409Conflict, "Conflito de concorrencia."),
 
-        DuplicateEntryException => (StatusCodes.Status409Conflict, "Registro duplicado."),
-
-        FluentValidation.ValidationException => (StatusCodes.Status400BadRequest, "Requisicao invalida."),
-
         DomainException => (StatusCodes.Status400BadRequest, "Requisicao invalida."),
 
         // Todo o resto e bug: ArgumentException (contrato interno violado),

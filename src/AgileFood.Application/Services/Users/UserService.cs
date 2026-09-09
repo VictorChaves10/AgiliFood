@@ -13,7 +13,6 @@ public class UserService : IUserService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher<User> _passwordHasher;
-
     private readonly TimeProvider _timeProvider;
 
     public UserService(
@@ -28,16 +27,14 @@ public class UserService : IUserService
 
     public async Task<UserResultDto> CreateAsync(CreateUserDto dto)
     {
-        var existingEmail = await _unitOfWork.UserRepository.GetByEmailAsync(dto.Email);
-
-        if (existingEmail is not null)
-            throw new DomainException("Já existe um usuário com este e-mail.");
+        var existing = await _unitOfWork.UserRepository.GetByEmailAsync(dto.Email);
+        if (existing is not null)
+            throw new DomainException("E-mail inválido.");
 
         var normalizedCpf = User.NormalizeCpf(dto.Cpf);
         var existingCpf = await _unitOfWork.UserRepository.GetByCpfAsync(normalizedCpf);
-
         if (existingCpf is not null)
-            throw new DomainException("Já existe um usuário com este CPF.");
+            throw new DomainException("CPF inválido.");
 
         var passwordHash = _passwordHasher.HashPassword(null!, dto.Password);
         var transactionPinHash = _passwordHasher.HashPassword(null!, dto.TransactionPin);
@@ -113,8 +110,8 @@ public class UserService : IUserService
         if (verification == PasswordVerificationResult.Failed)
             throw new DomainException("O PIN atual está incorreto.");
 
-        if (!TransactionPin.IsValid(dto.NewPin))
-            throw new DomainException($"O novo PIN deve ter exatamente {TransactionPin.Length} dígitos.");
+        if (string.IsNullOrWhiteSpace(dto.NewPin) || dto.NewPin.Length != 4 || !dto.NewPin.All(char.IsDigit))
+            throw new DomainException("O novo PIN deve ter exatamente 4 dígitos.");
 
         var newHash = _passwordHasher.HashPassword(user, dto.NewPin);
         user.SetTransactionPinHash(newHash);

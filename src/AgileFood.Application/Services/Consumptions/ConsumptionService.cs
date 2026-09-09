@@ -48,7 +48,7 @@ public class ConsumptionService : IConsumptionService
             throw new AccountLockedException(
                 "PIN bloqueado temporariamente por excesso de tentativas inválidas. Tente novamente mais tarde.");
 
-        if (!TransactionPin.IsValid(pin))
+        if (string.IsNullOrWhiteSpace(pin) || pin.Length != 4 || !pin.All(char.IsDigit))
             throw new DomainException("PIN invalido.");
 
         var verification = _passwordHasher.VerifyHashedPassword(user, user.TransactionPinHash, pin);
