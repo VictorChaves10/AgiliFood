@@ -2,6 +2,7 @@
 using AgileFood.Business.Interfaces;
 using AgileFood.Infrastructure.Context;
 using AgileFood.Infrastructure.Repository;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgileFood.Infrastructure.UnitOfWork;
@@ -48,6 +49,10 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
         get { return _catalogItemRepository ??= new CatalogItemRepository(_context); }
     }
 
+    // Numeros de erro do SQL Server para violacao de unicidade.
+    private const int UniqueIndexViolation = 2601;
+    private const int UniqueConstraintViolation = 2627;
+
     public async Task CommitAsync()
     {
         try
@@ -59,7 +64,15 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
             throw new ConcurrencyConflictException(
                 "O registro foi alterado por outra operação simultânea. Tente novamente.");
         }
+        catch (DbUpdateException ex) when (IsUniqueViolation(ex))
+        {
+            throw new DuplicateEntryException("Já existe um registro com estes dados.", ex);
+        }
     }
+
+    private static bool IsUniqueViolation(DbUpdateException exception) =>
+        exception.InnerException is SqlException sql &&
+        sql.Number is UniqueIndexViolation or UniqueConstraintViolation;
 
     public async Task ExecuteInTransactionAsync(Func<Task> operation)
     {
