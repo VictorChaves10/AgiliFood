@@ -4,15 +4,16 @@ using FluentValidation;
 
 namespace AgileFood.Application.Validators.Users;
 
-public sealed class CreateUserValidator : AbstractValidator<CreateUserDto>
+public sealed class UpdateUserValidator : AbstractValidator<UpdateUserDto>
 {
-    public CreateUserValidator()
+    public UpdateUserValidator()
     {
+        RuleFor(x => x.Id)
+            .GreaterThan(0).WithMessage("O identificador do usuário é obrigatório.");
+
         RuleFor(x => x.Name).ValidPersonName();
         RuleFor(x => x.Email).ValidEmail();
         RuleFor(x => x.Cpf).ValidCpf();
-        RuleFor(x => x.Password).ValidPassword();
-        RuleFor(x => x.TransactionPin).ValidTransactionPin();
 
         RuleFor(x => x.Role)
             .IsInEnum().WithMessage("O perfil informado não é válido.");
