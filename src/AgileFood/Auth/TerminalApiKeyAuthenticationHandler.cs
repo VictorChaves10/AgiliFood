@@ -9,16 +9,16 @@ namespace AgileFood.Api.Auth;
 
 public class TerminalApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    private readonly IConfiguration _configuration;
+    private readonly IOptionsMonitor<TerminalSettings> _terminalSettings;
 
     public TerminalApiKeyAuthenticationHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        IConfiguration configuration)
+        IOptionsMonitor<TerminalSettings> terminalSettings)
         : base(options, logger, encoder)
     {
-        _configuration = configuration;
+        _terminalSettings = terminalSettings;
     }
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -29,7 +29,7 @@ public class TerminalApiKeyAuthenticationHandler : AuthenticationHandler<Authent
             return Task.FromResult(AuthenticateResult.Fail("Chave do terminal não informada."));
         }
 
-        var expectedKey = _configuration["Terminal:ApiKey"];
+        var expectedKey = _terminalSettings.CurrentValue.ApiKey;
 
         if (!IsValidKey(providedKey.ToString(), expectedKey))
             return Task.FromResult(AuthenticateResult.Fail("Chave do terminal inválida."));
